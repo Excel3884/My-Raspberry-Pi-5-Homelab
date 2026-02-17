@@ -11,7 +11,7 @@ In this repository I have listed all of the steps I have taken to configure my R
 
 * Prerequisites
 ** Docker
-[[https://www.docker.com/][Docker]] is a free and opens-source software that automates the deployment and running of containerized applications.
+[[https://www.docker.com/][Docker]] is a free and open-source software that automates the deployment and running of containerized applications.
 
 Installing Docker:
 #+begin_src bash
@@ -110,9 +110,9 @@ Once the container is up and running, you can create a new whiteboard by going t
 
 You will notice there is a red WiFi icon on the bottom right indicating you are offline. Indeed, the file cannot be shared among other devices, because the WebSocket server hasn't been configured yet. In order to configure it, you go to Administration Settings > Administration (Section) > Whiteboard. There you need to fill in the following information:
 
-*WebSocket URL:* http://<my-hotname>:3002
+*WebSocket URL:* ~http://<my-hotname>:3002~
 
-*Shared Secret:* <some-random-secret>
+*Shared Secret:* ~<some-random-secret>~
 
 After saving the settings, you should see a confirmation message, and you are good to go!
 

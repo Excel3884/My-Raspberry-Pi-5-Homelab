@@ -1,27 +1,27 @@
 
 # Table of Contents
 
-1.  [Introduction](#org7610a71)
-2.  [Setup](#orgccb0aac)
-3.  [Prerequisites](#orgfa7889d)
-    1.  [Docker](#org2021b7a)
-    2.  [Tailscale](#orgb317f9d)
-4.  [Services](#orga92b44b)
-    1.  [Portainer](#orgb740077)
-    2.  [Nextcloud](#org0e49647)
-    3.  [Nextcloud Whiteboard](#org5b8f671)
-    4.  [Bitwarden](#org2e07017)
+1.  [Introduction](#org238e241)
+2.  [Setup](#orga664b28)
+3.  [Prerequisites](#org58da233)
+    1.  [Docker](#org516cd34)
+    2.  [Tailscale](#org3c38c82)
+4.  [Services](#org951a959)
+    1.  [Portainer](#org208b5c2)
+    2.  [Nextcloud](#orga858f72)
+    3.  [Nextcloud Whiteboard](#orgbf268b6)
+    4.  [Bitwarden](#org0fbeb8e)
 
 
 
-<a id="org7610a71"></a>
+<a id="org238e241"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="orgccb0aac"></a>
+<a id="orga664b28"></a>
 
 # Setup
 
@@ -31,16 +31,16 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="orgfa7889d"></a>
+<a id="org58da233"></a>
 
 # Prerequisites
 
 
-<a id="org2021b7a"></a>
+<a id="org516cd34"></a>
 
 ## Docker
 
-[Docker](https://www.docker.com/) is a free and opens-source software that automates the deployment and running of containerized applications.
+[Docker](https://www.docker.com/) is a free and open-source software that automates the deployment and running of containerized applications.
 
 Installing Docker:
 
@@ -57,7 +57,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="orgb317f9d"></a>
+<a id="org3c38c82"></a>
 
 ## Tailscale
 
@@ -72,12 +72,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orga92b44b"></a>
+<a id="org951a959"></a>
 
 # Services
 
 
-<a id="orgb740077"></a>
+<a id="org208b5c2"></a>
 
 ## Portainer
 
@@ -96,7 +96,7 @@ Starting Portainer using docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="org0e49647"></a>
+<a id="orga858f72"></a>
 
 ## Nextcloud
 
@@ -131,7 +131,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="org5b8f671"></a>
+<a id="orgbf268b6"></a>
 
 ## Nextcloud Whiteboard
 
@@ -147,14 +147,14 @@ Once the container is up and running, you can create a new whiteboard by going t
 
 You will notice there is a red WiFi icon on the bottom right indicating you are offline. Indeed, the file cannot be shared among other devices, because the WebSocket server hasn&rsquo;t been configured yet. In order to configure it, you go to Administration Settings > Administration (Section) > Whiteboard. There you need to fill in the following information:
 
-**WebSocket URL:** <http://<my-hotname>:3002>
+**WebSocket URL:** `http://<my-hotname>:3002`
 
-**Shared Secret:** <some-random-secret>
+**Shared Secret:** `<some-random-secret>`
 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="org2e07017"></a>
+<a id="org0fbeb8e"></a>
 
 ## Bitwarden
 
