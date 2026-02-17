@@ -1,27 +1,27 @@
 
 # Table of Contents
 
-1.  [Introduction](#orgf738e41)
-2.  [Setup](#orgc307659)
-3.  [Prerequisites](#orgbed6885)
-    1.  [Docker](#orgd78a5b9)
-    2.  [Tailscale](#org99a93da)
-4.  [Services](#orgcba94f2)
-    1.  [Portainer](#org3c14ed3)
-    2.  [Nextcloud](#orge2ee82b)
-    3.  [Nextcloud Whiteboard](#org2f82af1)
-    4.  [Bitwarden](#org5649aff)
+1.  [Introduction](#org7610a71)
+2.  [Setup](#orgccb0aac)
+3.  [Prerequisites](#orgfa7889d)
+    1.  [Docker](#org2021b7a)
+    2.  [Tailscale](#orgb317f9d)
+4.  [Services](#orga92b44b)
+    1.  [Portainer](#orgb740077)
+    2.  [Nextcloud](#org0e49647)
+    3.  [Nextcloud Whiteboard](#org5b8f671)
+    4.  [Bitwarden](#org2e07017)
 
 
 
-<a id="orgf738e41"></a>
+<a id="org7610a71"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="orgc307659"></a>
+<a id="orgccb0aac"></a>
 
 # Setup
 
@@ -31,12 +31,12 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="orgbed6885"></a>
+<a id="orgfa7889d"></a>
 
 # Prerequisites
 
 
-<a id="orgd78a5b9"></a>
+<a id="org2021b7a"></a>
 
 ## Docker
 
@@ -57,7 +57,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="org99a93da"></a>
+<a id="orgb317f9d"></a>
 
 ## Tailscale
 
@@ -72,12 +72,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orgcba94f2"></a>
+<a id="orga92b44b"></a>
 
 # Services
 
 
-<a id="org3c14ed3"></a>
+<a id="orgb740077"></a>
 
 ## Portainer
 
@@ -93,10 +93,10 @@ Starting Portainer using docker:
 
     sudo docker run -d -p 9000:9000 --name=portainer_app --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
-Then Portainer can be accessed at <http://<my-hostname>:9000>, where my-hostname is the hostname of your Raspberry Pi.
+Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="orge2ee82b"></a>
+<a id="org0e49647"></a>
 
 ## Nextcloud
 
@@ -122,7 +122,7 @@ Running the Nextcloud container:
 
     docker run --name nextcloud -d -p 8080:80 -v /home/pi/nextcloud:/var/www/html --network nextcloud-net nextcloud
 
-Nextcloud can be accessed at <https://<my-hostname>:8080>, where you will be prompted to create an account.
+Nextcloud can be accessed at `https://<my-hostname>:8080`, where you will be prompted to create an account.
 
 For Data folder use `/var/www/html/data`
 
@@ -131,7 +131,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="org2f82af1"></a>
+<a id="org5b8f671"></a>
 
 ## Nextcloud Whiteboard
 
@@ -154,7 +154,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="org5649aff"></a>
+<a id="org2e07017"></a>
 
 ## Bitwarden
 

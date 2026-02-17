@@ -59,7 +59,7 @@ Starting Portainer using docker:
 sudo docker run -d -p 9000:9000 --name=portainer_app --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 #+end_src
 
-Then Portainer can be accessed at http://<my-hostname>:9000, where my-hostname is the hostname of your Raspberry Pi.
+Then Portainer can be accessed at ~http://<my-hostname>:9000~, where my-hostname is the hostname of your Raspberry Pi.
 
 ** Nextcloud
 [[https://nextcloud.com/][Nextcloud]] is a self-hosted productivity platform allowing you to sync your files, calendar, etc. Basically, it can replace the whole Google ecosystem (except the email service).
@@ -88,7 +88,7 @@ Running the Nextcloud container:
 docker run --name nextcloud -d -p 8080:80 -v /home/pi/nextcloud:/var/www/html --network nextcloud-net nextcloud
 #+end_src
 
-Nextcloud can be accessed at https://<my-hostname>:8080, where you will be prompted to create an account.
+Nextcloud can be accessed at ~https://<my-hostname>:8080~, where you will be prompted to create an account.
 
 For Data folder use ~/var/www/html/data~
 
