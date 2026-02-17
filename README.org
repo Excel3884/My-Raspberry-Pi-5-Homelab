@@ -97,7 +97,7 @@ Choose PostgreSQL for database and use ~postgres~ for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 ** Nextcloud Whiteboard
-This is the official [[https://github.com/nextcloud/whiteboard][Whiteboard app]] for Nextcloud. It is an integration of [[https://github.com/excalidraw/excalidraw][Excalidraw]] into Nextcloud, and supports drawing, writing text, etc. on an infinite canvas featuring real-time collaboration. I have found it to be the best self-hosting solution for hand-written notes on iPad. The stylus support is excellent and the files are being updated instantly. There have been complaints that palm rejection on the iPad doesn't work so well, but I haven't experienced any issues so far.
+This is the official [[https://github.com/nextcloud/whiteboard][Whiteboard app]] for Nextcloud. It is an integration of [[https://github.com/excalidraw/excalidraw][Excalidraw]] into Nextcloud, and supports drawing, writing text, etc. on an infinite canvas featuring real-time collaboration. I have found it to be the best self-hosting solution for hand-written notes on iPad. The stylus support is excellent and the files are being updated instantly. There have been complaints that palm rejection on the iPad does not work so well, but I have not experienced any issues so far.
 
 To install it I just followed the instructions on Whiteboard's [[https://github.com/excalidraw/excalidraw][Github]].
 
@@ -108,7 +108,7 @@ docker run -d --name nextcloud-whiteboard -e JWT_SECRET_KEY=<some-random-secret>
 
 Once the container is up and running, you can create a new whiteboard by going to Files > New > New whiteboard.
 
-You will notice there is a red WiFi icon on the bottom right indicating you are offline. Indeed, the file cannot be shared among other devices, because the WebSocket server hasn't been configured yet. In order to configure it, you go to Administration Settings > Administration (Section) > Whiteboard. There you need to fill in the following information:
+You will notice there is a red WiFi icon on the bottom right indicating you are offline. Indeed, the file cannot be shared among other devices, because the WebSocket server has not been configured yet. In order to configure it, you go to Administration Settings > Administration (Section) > Whiteboard. There you need to fill in the following information:
 
 *WebSocket URL:* ~http://<my-hotname>:3002~
 

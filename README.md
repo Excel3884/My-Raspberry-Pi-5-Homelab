@@ -1,27 +1,27 @@
 
 # Table of Contents
 
-1.  [Introduction](#org238e241)
-2.  [Setup](#orga664b28)
-3.  [Prerequisites](#org58da233)
-    1.  [Docker](#org516cd34)
-    2.  [Tailscale](#org3c38c82)
-4.  [Services](#org951a959)
-    1.  [Portainer](#org208b5c2)
-    2.  [Nextcloud](#orga858f72)
-    3.  [Nextcloud Whiteboard](#orgbf268b6)
-    4.  [Bitwarden](#org0fbeb8e)
+1.  [Introduction](#org2fc102c)
+2.  [Setup](#org35a049b)
+3.  [Prerequisites](#org57b1215)
+    1.  [Docker](#orgfa4f6a5)
+    2.  [Tailscale](#org39fd68c)
+4.  [Services](#orgb53de77)
+    1.  [Portainer](#orge586446)
+    2.  [Nextcloud](#org64221a7)
+    3.  [Nextcloud Whiteboard](#org921d52c)
+    4.  [Bitwarden](#orgc859a67)
 
 
 
-<a id="org238e241"></a>
+<a id="org2fc102c"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="orga664b28"></a>
+<a id="org35a049b"></a>
 
 # Setup
 
@@ -31,12 +31,12 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="org58da233"></a>
+<a id="org57b1215"></a>
 
 # Prerequisites
 
 
-<a id="org516cd34"></a>
+<a id="orgfa4f6a5"></a>
 
 ## Docker
 
@@ -57,7 +57,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="org3c38c82"></a>
+<a id="org39fd68c"></a>
 
 ## Tailscale
 
@@ -72,12 +72,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="org951a959"></a>
+<a id="orgb53de77"></a>
 
 # Services
 
 
-<a id="org208b5c2"></a>
+<a id="orge586446"></a>
 
 ## Portainer
 
@@ -96,7 +96,7 @@ Starting Portainer using docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="orga858f72"></a>
+<a id="org64221a7"></a>
 
 ## Nextcloud
 
@@ -131,11 +131,11 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="orgbf268b6"></a>
+<a id="org921d52c"></a>
 
 ## Nextcloud Whiteboard
 
-This is the official [Whiteboard app](https://github.com/nextcloud/whiteboard) for Nextcloud. It is an integration of [Excalidraw](https://github.com/excalidraw/excalidraw) into Nextcloud, and supports drawing, writing text, etc. on an infinite canvas featuring real-time collaboration. I have found it to be the best self-hosting solution for hand-written notes on iPad. The stylus support is excellent and the files are being updated instantly. There have been complaints that palm rejection on the iPad doesn&rsquo;t work so well, but I haven&rsquo;t experienced any issues so far.
+This is the official [Whiteboard app](https://github.com/nextcloud/whiteboard) for Nextcloud. It is an integration of [Excalidraw](https://github.com/excalidraw/excalidraw) into Nextcloud, and supports drawing, writing text, etc. on an infinite canvas featuring real-time collaboration. I have found it to be the best self-hosting solution for hand-written notes on iPad. The stylus support is excellent and the files are being updated instantly. There have been complaints that palm rejection on the iPad does not work so well, but I have not experienced any issues so far.
 
 To install it I just followed the instructions on Whiteboard&rsquo;s [Github](https://github.com/excalidraw/excalidraw).
 
@@ -145,7 +145,7 @@ Running the container:
 
 Once the container is up and running, you can create a new whiteboard by going to Files > New > New whiteboard.
 
-You will notice there is a red WiFi icon on the bottom right indicating you are offline. Indeed, the file cannot be shared among other devices, because the WebSocket server hasn&rsquo;t been configured yet. In order to configure it, you go to Administration Settings > Administration (Section) > Whiteboard. There you need to fill in the following information:
+You will notice there is a red WiFi icon on the bottom right indicating you are offline. Indeed, the file cannot be shared among other devices, because the WebSocket server has not been configured yet. In order to configure it, you go to Administration Settings > Administration (Section) > Whiteboard. There you need to fill in the following information:
 
 **WebSocket URL:** `http://<my-hotname>:3002`
 
@@ -154,7 +154,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="org0fbeb8e"></a>
+<a id="orgc859a67"></a>
 
 ## Bitwarden
 
