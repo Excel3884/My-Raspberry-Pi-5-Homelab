@@ -1,27 +1,29 @@
 
 # Table of Contents
 
-1.  [Introduction](#org2fc102c)
-2.  [Setup](#org35a049b)
-3.  [Prerequisites](#org57b1215)
-    1.  [Docker](#orgfa4f6a5)
-    2.  [Tailscale](#org39fd68c)
-4.  [Services](#orgb53de77)
-    1.  [Portainer](#orge586446)
-    2.  [Nextcloud](#org64221a7)
-    3.  [Nextcloud Whiteboard](#org921d52c)
-    4.  [Bitwarden](#orgc859a67)
+1.  [Introduction](#orgefc1887)
+2.  [Setup](#org318b697)
+3.  [Prerequisites](#org7a07a12)
+    1.  [Docker](#org2884776)
+    2.  [Tailscale](#org47bc8a7)
+4.  [Services](#orgb3449a0)
+    1.  [Portainer](#orgac0572a)
+    2.  [Nextcloud](#org64a63a9)
+    3.  [Nextcloud Whiteboard](#org252dcf4)
+    4.  [Bitwarden](#org3d6a866)
+    5.  [FreshRSS](#orge37efb1)
+5.  [Backups](#orgf58fc55)
 
 
 
-<a id="org2fc102c"></a>
+<a id="orgefc1887"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="org35a049b"></a>
+<a id="org318b697"></a>
 
 # Setup
 
@@ -31,12 +33,12 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="org57b1215"></a>
+<a id="org7a07a12"></a>
 
 # Prerequisites
 
 
-<a id="orgfa4f6a5"></a>
+<a id="org2884776"></a>
 
 ## Docker
 
@@ -57,7 +59,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="org39fd68c"></a>
+<a id="org47bc8a7"></a>
 
 ## Tailscale
 
@@ -72,12 +74,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orgb53de77"></a>
+<a id="orgb3449a0"></a>
 
 # Services
 
 
-<a id="orge586446"></a>
+<a id="orgac0572a"></a>
 
 ## Portainer
 
@@ -96,7 +98,7 @@ Starting Portainer using docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="org64221a7"></a>
+<a id="org64a63a9"></a>
 
 ## Nextcloud
 
@@ -131,7 +133,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="org921d52c"></a>
+<a id="org252dcf4"></a>
 
 ## Nextcloud Whiteboard
 
@@ -154,7 +156,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="orgc859a67"></a>
+<a id="org3d6a866"></a>
 
 ## Bitwarden
 
@@ -181,4 +183,69 @@ Transfer the generated files to the `/ssl/keys` folder.
 The Vaultwarden container can finally be deployed to support HTTPS, by passing the `.key` and `.cert` files to &ldquo;Rocket&rdquo;:
 
     docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
+
+
+<a id="orge37efb1"></a>
+
+## FreshRSS
+
+
+<a id="orgf58fc55"></a>
+
+# Backups
+
+I am taking backups by creating snapshots using [rsnapshot](https://rsnapshot.org/). This is a snapshot utility based on [rsync](https://linux.die.net/man/1/rsync), and it can be used to take periodic backups of local or remote machines over ssh. It is making use of hard links, in order to reduce disk space usage.
+
+To configure rsnapshot I followed this [guide](https://raspberrytips.com/rsnapshot-raspberry-pi/).
+
+Once rsnapshot is installed, it can be configured by editing `/etc/rsnapshot.conf`.
+
+The first step is to set the &ldquo;root&rdquo; directory, where the snapshots are going to be saved:
+
+    snapshot_root /media/angel/raspberry_backups
+
+In this case, I am using an external drive which has been mounted to `/media/angel`.
+
+The next step is to set the number of backups to keep per backup level. Here I have replaced the following lines
+
+    retain    alpha    6
+    retain    beta     7
+    retain    gamma    4
+
+with those:
+
+    retain    daily      7
+    retain    weekly     4
+    retain    monthly    6
+
+The daily, weekly, and monthly correspond to the levels of backup, while the numbers represent the number of snapshots that will be maintained before the first backup is replaced.
+
+Lastly, we can select the folders we want to backup:
+
+    ###############################
+    ### BACKUP POINTS / SCRIPTS ###
+    ###############################
+    
+    # LOCALHOST
+    backup	/home/		localhost/
+    backup	/etc/		localhost/
+    backup	/usr/local/	localhost/
+    backup	/var/lib/	localhost/
+    backup	/opt/		localhost/
+
+Once the necessary changes have been made, the configuration can be tested/validated using the following command:
+
+    sudo rsnapshot configtest
+
+If the output is &ldquo;Syntax OK&rdquo;, it means the configuration does not have any syntax errors.
+
+Before taking your first backup, you can verify that all permissions are configured correctly by running rsnapshot in dry-run mode:
+
+    sudo rsnapshot -t daily
+
+Finally, you can take backups by using the same command without the -t flag:
+
+    sudo rsnapshot daily
+
+The backups can be automated using [Cron](https://en.wikipedia.org/wiki/Cron). I have not done this yet, but if you are interested in configuring it you can follow the guide I mentioned earlier.
 

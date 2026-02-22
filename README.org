@@ -143,3 +143,67 @@ The Vaultwarden container can finally be deployed to support HTTPS, by passing t
 #+begin_src bash
 docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 #+end_src
+
+** FreshRSS
+* Backups
+I am taking backups by creating snapshots using [[https://rsnapshot.org/][rsnapshot]]. This is a snapshot utility based on [[https://linux.die.net/man/1/rsync][rsync]], and it can be used to take periodic backups of local or remote machines over ssh. It is making use of hard links, in order to reduce disk space usage.
+
+To configure rsnapshot I followed this [[https://raspberrytips.com/rsnapshot-raspberry-pi/][guide]].
+
+Once rsnapshot is installed, it can be configured by editing ~/etc/rsnapshot.conf~.
+
+The first step is to set the "root" directory, where the snapshots are going to be saved:
+#+begin_src
+snapshot_root /media/angel/raspberry_backups
+#+end_src
+
+In this case, I am using an external drive which has been mounted to ~/media/angel~.
+
+The next step is to set the number of backups to keep per backup level. Here I have replaced the following lines
+#+begin_src
+retain    alpha    6
+retain    beta     7
+retain    gamma    4
+#+end_src
+
+with those:
+#+begin_src
+retain    daily      7
+retain    weekly     4
+retain    monthly    6
+#+end_src
+
+The daily, weekly, and monthly correspond to the levels of backup, while the numbers represent the number of snapshots that will be maintained before the first backup is replaced.
+
+Lastly, we can select the folders we want to backup:
+#+begin_src
+###############################
+### BACKUP POINTS / SCRIPTS ###
+###############################
+
+# LOCALHOST
+backup	/home/		localhost/
+backup	/etc/		localhost/
+backup	/usr/local/	localhost/
+backup	/var/lib/	localhost/
+backup	/opt/		localhost/
+#+end_src
+
+Once the necessary changes have been made, the configuration can be tested/validated using the following command:
+#+begin_src bash
+sudo rsnapshot configtest
+#+end_src
+
+If the output is "Syntax OK", it means the configuration does not have any syntax errors.
+
+Before taking your first backup, you can verify that all permissions are configured correctly by running rsnapshot in dry-run mode:
+#+begin_src bash
+sudo rsnapshot -t daily
+#+end_src
+
+Finally, you can take backups by using the same command without the -t flag:
+#+begin_src bash
+sudo rsnapshot daily
+#+end_src
+
+The backups can be automated using [[https://en.wikipedia.org/wiki/Cron][Cron]]. I have not done this yet, but if you are interested in configuring it you can follow the guide I mentioned earlier.
