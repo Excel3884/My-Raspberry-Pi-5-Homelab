@@ -1,29 +1,30 @@
 
 # Table of Contents
 
-1.  [Introduction](#org767d075)
-2.  [Setup](#orgbc55725)
-3.  [Prerequisites](#orgeb7cfce)
-    1.  [Docker](#orga4cc88b)
-    2.  [Tailscale](#org346097c)
-4.  [Services](#orgdc818e0)
-    1.  [Portainer](#org4d7e6ee)
-    2.  [Nextcloud](#orga3f5683)
-    3.  [Nextcloud Whiteboard](#org685d0c0)
-    4.  [Bitwarden](#orgafa548e)
-    5.  [FreshRSS](#orgb126edf)
-5.  [Backups](#org323cf64)
+1.  [Introduction](#org3137a0c)
+2.  [Setup](#orgf3ef447)
+3.  [Prerequisites](#orgf01facc)
+    1.  [Docker](#orge711b13)
+    2.  [Tailscale](#orge2c0dbd)
+4.  [Services](#orgef3b252)
+    1.  [Portainer](#org09d603b)
+    2.  [Nextcloud](#org9d5853d)
+    3.  [Nextcloud Whiteboard](#orgfc545c5)
+    4.  [Bitwarden](#org43cd352)
+    5.  [FreshRSS](#org30bdf77)
+    6.  [Super Productivity](#orgce4c7cd)
+5.  [Backups](#orgc8a2441)
 
 
 
-<a id="org767d075"></a>
+<a id="org3137a0c"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="orgbc55725"></a>
+<a id="orgf3ef447"></a>
 
 # Setup
 
@@ -33,12 +34,12 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="orgeb7cfce"></a>
+<a id="orgf01facc"></a>
 
 # Prerequisites
 
 
-<a id="orga4cc88b"></a>
+<a id="orge711b13"></a>
 
 ## Docker
 
@@ -59,7 +60,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="org346097c"></a>
+<a id="orge2c0dbd"></a>
 
 ## Tailscale
 
@@ -74,12 +75,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orgdc818e0"></a>
+<a id="orgef3b252"></a>
 
 # Services
 
 
-<a id="org4d7e6ee"></a>
+<a id="org09d603b"></a>
 
 ## Portainer
 
@@ -98,7 +99,7 @@ Starting Portainer using docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="orga3f5683"></a>
+<a id="org9d5853d"></a>
 
 ## Nextcloud
 
@@ -133,7 +134,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="org685d0c0"></a>
+<a id="orgfc545c5"></a>
 
 ## Nextcloud Whiteboard
 
@@ -156,7 +157,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="orgafa548e"></a>
+<a id="org43cd352"></a>
 
 ## Bitwarden
 
@@ -185,12 +186,29 @@ The Vaultwarden container can finally be deployed to support HTTPS, by passing t
     docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 
 
-<a id="orgb126edf"></a>
+<a id="org30bdf77"></a>
 
 ## FreshRSS
 
 
-<a id="org323cf64"></a>
+<a id="orgce4c7cd"></a>
+
+## Super Productivity
+
+[Super Productivity](https://github.com/super-productivity/super-productivity) is a ToDo list app with time boxing and time tracking capabilities. ToDos can be organized through different tags and projects. It supports integration with Trello, GitHub, Azure DevOps, etc.
+
+No special setup for setting up the container here; I just used portainer to pull and deploy the container using this [image](https://hub.docker.com/r/johannesjo/super-productivity/tags) (official).
+
+Synchronization is possible with SuperSync (beta), Dropbox or Nextcloud. In this setup I used Nextcloud, but additional steps were required to allow super productivity to modify files.
+
+In the first place, Super productivity needs permission to use WebDav. So, in the Administration Settings of Nextcloud, in the WebAppPassword section, SuperProducivity&rsquo;s URL needs to be added as an allowed origin for WebDav/CalDav requests.
+
+Furthermore, configuring SuperProducivity Sync requires a separate app password (Nextcloud&rsquo;s won&rsquo;t work here). An app password can be generated in the Personal Settings of Nextcloud, in the Security section. Take note of the password, as it will be displayed only once. You can use the same password for all your devices.
+
+Finally, make sure there is a folder in the root of your Nextcloud files having the same name as the Sync Folder Path you specified in the configuration. Super Producivity won&rsquo;t create the folder for you automatically.
+
+
+<a id="orgc8a2441"></a>
 
 # Backups
 

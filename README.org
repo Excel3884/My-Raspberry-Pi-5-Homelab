@@ -145,6 +145,19 @@ docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.c
 #+end_src
 
 ** FreshRSS
+** Super Productivity
+[[https://github.com/super-productivity/super-productivity][Super Productivity]] is a ToDo list app with time boxing and time tracking capabilities. ToDos can be organized through different tags and projects. It supports integration with Trello, GitHub, Azure DevOps, etc.
+
+No special setup for setting up the container here; I just used portainer to pull and deploy the container using this [[https://hub.docker.com/r/johannesjo/super-productivity/tags][image]] (official).
+
+Synchronization is possible with SuperSync (beta), Dropbox or Nextcloud. In this setup I used Nextcloud, but additional steps were required to allow super productivity to modify files.
+
+In the first place, Super productivity needs permission to use WebDav. So, in the Administration Settings of Nextcloud, in the WebAppPassword section, SuperProducivity's URL needs to be added as an allowed origin for WebDav/CalDav requests.
+
+Furthermore, configuring SuperProducivity Sync requires a separate app password (Nextcloud's won't work here). An app password can be generated in the Personal Settings of Nextcloud, in the Security section. Take note of the password, as it will be displayed only once. You can use the same password for all your devices.
+
+Finally, make sure there is a folder in the root of your Nextcloud files having the same name as the Sync Folder Path you specified in the configuration. Super Producivity won't create the folder for you automatically.
+
 * Backups
 I am taking backups by creating snapshots using [[https://rsnapshot.org/][rsnapshot]]. This is a snapshot utility based on [[https://linux.die.net/man/1/rsync][rsync]], and it can be used to take periodic backups of local or remote machines over ssh. It is making use of hard links, in order to reduce disk space usage.
 
