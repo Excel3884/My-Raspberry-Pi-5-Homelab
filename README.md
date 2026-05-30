@@ -1,44 +1,44 @@
 
 # Table of Contents
 
-1.  [Introduction](#orgefc1887)
-2.  [Setup](#org318b697)
-3.  [Prerequisites](#org7a07a12)
-    1.  [Docker](#org2884776)
-    2.  [Tailscale](#org47bc8a7)
-4.  [Services](#orgb3449a0)
-    1.  [Portainer](#orgac0572a)
-    2.  [Nextcloud](#org64a63a9)
-    3.  [Nextcloud Whiteboard](#org252dcf4)
-    4.  [Bitwarden](#org3d6a866)
-    5.  [FreshRSS](#orge37efb1)
-5.  [Backups](#orgf58fc55)
+1.  [Introduction](#org767d075)
+2.  [Setup](#orgbc55725)
+3.  [Prerequisites](#orgeb7cfce)
+    1.  [Docker](#orga4cc88b)
+    2.  [Tailscale](#org346097c)
+4.  [Services](#orgdc818e0)
+    1.  [Portainer](#org4d7e6ee)
+    2.  [Nextcloud](#orga3f5683)
+    3.  [Nextcloud Whiteboard](#org685d0c0)
+    4.  [Bitwarden](#orgafa548e)
+    5.  [FreshRSS](#orgb126edf)
+5.  [Backups](#org323cf64)
 
 
 
-<a id="orgefc1887"></a>
+<a id="org767d075"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="org318b697"></a>
+<a id="orgbc55725"></a>
 
 # Setup
 
 -   **Device:** Raspberry Pi 5 Model B
 -   **Memory:** 8GB RAM
--   **OS:** Debian GNU/Linux 13 (trixie) aarch64 &#x2014; *This is Pi OS Lite (64-bit) which comes with no desktop environment*
+-   **OS:** Debian GNU/Linux 13 (trixie) aarch64 &mdash; *This is Pi OS Lite (64-bit) which comes with no desktop environment*
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="org7a07a12"></a>
+<a id="orgeb7cfce"></a>
 
 # Prerequisites
 
 
-<a id="org2884776"></a>
+<a id="orga4cc88b"></a>
 
 ## Docker
 
@@ -59,7 +59,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="org47bc8a7"></a>
+<a id="org346097c"></a>
 
 ## Tailscale
 
@@ -74,12 +74,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orgb3449a0"></a>
+<a id="orgdc818e0"></a>
 
 # Services
 
 
-<a id="orgac0572a"></a>
+<a id="org4d7e6ee"></a>
 
 ## Portainer
 
@@ -98,7 +98,7 @@ Starting Portainer using docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="org64a63a9"></a>
+<a id="orga3f5683"></a>
 
 ## Nextcloud
 
@@ -133,7 +133,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="org252dcf4"></a>
+<a id="org685d0c0"></a>
 
 ## Nextcloud Whiteboard
 
@@ -156,7 +156,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="org3d6a866"></a>
+<a id="orgafa548e"></a>
 
 ## Bitwarden
 
@@ -185,12 +185,12 @@ The Vaultwarden container can finally be deployed to support HTTPS, by passing t
     docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 
 
-<a id="orge37efb1"></a>
+<a id="orgb126edf"></a>
 
 ## FreshRSS
 
 
-<a id="orgf58fc55"></a>
+<a id="org323cf64"></a>
 
 # Backups
 
