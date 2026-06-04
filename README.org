@@ -181,12 +181,15 @@ retain    gamma    4
 
 with those:
 #+begin_src
-retain    daily      7
+#retain    daily      7
 retain    weekly     4
-retain    monthly    6
+#retain    monthly    6
 #+end_src
 
 The daily, weekly, and monthly correspond to the levels of backup, while the numbers represent the number of snapshots that will be maintained before the first backup is replaced.
+
+As you may notice, I have commented out the daily and weekly. For now I am getting my backups manually once a week, so there is no need for multiple levels.
+
 
 Lastly, we can select the folders we want to backup:
 #+begin_src

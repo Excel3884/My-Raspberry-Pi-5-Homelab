@@ -1,30 +1,30 @@
 
 # Table of Contents
 
-1.  [Introduction](#org3137a0c)
-2.  [Setup](#orgf3ef447)
-3.  [Prerequisites](#orgf01facc)
-    1.  [Docker](#orge711b13)
-    2.  [Tailscale](#orge2c0dbd)
-4.  [Services](#orgef3b252)
-    1.  [Portainer](#org09d603b)
-    2.  [Nextcloud](#org9d5853d)
-    3.  [Nextcloud Whiteboard](#orgfc545c5)
-    4.  [Bitwarden](#org43cd352)
-    5.  [FreshRSS](#org30bdf77)
-    6.  [Super Productivity](#orgce4c7cd)
-5.  [Backups](#orgc8a2441)
+1.  [Introduction](#org5963a3c)
+2.  [Setup](#orgef897ec)
+3.  [Prerequisites](#org4efe060)
+    1.  [Docker](#org8a933ba)
+    2.  [Tailscale](#org22ae949)
+4.  [Services](#orga1c7b43)
+    1.  [Portainer](#org0abee6d)
+    2.  [Nextcloud](#orgec4eacb)
+    3.  [Nextcloud Whiteboard](#orge5ae22c)
+    4.  [Bitwarden](#orgfa671cb)
+    5.  [FreshRSS](#org8f5b722)
+    6.  [Super Productivity](#orgb378f08)
+5.  [Backups](#org2268322)
 
 
 
-<a id="org3137a0c"></a>
+<a id="org5963a3c"></a>
 
 # Introduction
 
 In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="orgf3ef447"></a>
+<a id="orgef897ec"></a>
 
 # Setup
 
@@ -34,12 +34,12 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="orgf01facc"></a>
+<a id="org4efe060"></a>
 
 # Prerequisites
 
 
-<a id="orge711b13"></a>
+<a id="org8a933ba"></a>
 
 ## Docker
 
@@ -60,7 +60,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the docker group.
 
 
-<a id="orge2c0dbd"></a>
+<a id="org22ae949"></a>
 
 ## Tailscale
 
@@ -75,12 +75,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orgef3b252"></a>
+<a id="orga1c7b43"></a>
 
 # Services
 
 
-<a id="org09d603b"></a>
+<a id="org0abee6d"></a>
 
 ## Portainer
 
@@ -99,7 +99,7 @@ Starting Portainer using docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="org9d5853d"></a>
+<a id="orgec4eacb"></a>
 
 ## Nextcloud
 
@@ -134,7 +134,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="orgfc545c5"></a>
+<a id="orge5ae22c"></a>
 
 ## Nextcloud Whiteboard
 
@@ -157,7 +157,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="org43cd352"></a>
+<a id="orgfa671cb"></a>
 
 ## Bitwarden
 
@@ -186,12 +186,12 @@ The Vaultwarden container can finally be deployed to support HTTPS, by passing t
     docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 
 
-<a id="org30bdf77"></a>
+<a id="org8f5b722"></a>
 
 ## FreshRSS
 
 
-<a id="orgce4c7cd"></a>
+<a id="orgb378f08"></a>
 
 ## Super Productivity
 
@@ -208,7 +208,7 @@ Furthermore, configuring SuperProducivity Sync requires a separate app password 
 Finally, make sure there is a folder in the root of your Nextcloud files having the same name as the Sync Folder Path you specified in the configuration. Super Producivity won&rsquo;t create the folder for you automatically.
 
 
-<a id="orgc8a2441"></a>
+<a id="org2268322"></a>
 
 # Backups
 
@@ -232,11 +232,13 @@ The next step is to set the number of backups to keep per backup level. Here I h
 
 with those:
 
-    retain    daily      7
+    #retain    daily      7
     retain    weekly     4
-    retain    monthly    6
+    #retain    monthly    6
 
 The daily, weekly, and monthly correspond to the levels of backup, while the numbers represent the number of snapshots that will be maintained before the first backup is replaced.
+
+As you may notice, I have commented out the daily and weekly. For now I am getting my backups manually once a week, so there is no need for multiple levels.
 
 Lastly, we can select the folders we want to backup:
 
