@@ -1,7 +1,7 @@
 #+TITLE: My Raspberry Pi 5 Homelab
 
 * Introduction
-In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
+In this repository I have listed all the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 * Setup
 + *Device:* Raspberry Pi 5 Model B
@@ -18,7 +18,7 @@ Installing Docker:
 curl -fsSL https://get.docker.com | sh
 #+end_src
 
-Testing docker for correct operation:
+Testing Docker for correct operation:
 #+begin_src bash
 sudo docker run --rm hello-world
 #+end_src
@@ -28,7 +28,7 @@ Adding the user to the docker group:
 sudo usermod -aG docker <my-username> # where my-username is the username of your account
 #+end_src
 
-Then exit and log back in to be added to the docker group.
+Then exit and log back in to be added to the Docker group.
 
 ** Tailscale
 [[https://tailscale.com/][Tailscale]] is a free and open-source VPN service that allows you to connect all your devices. The free plan supports up to 100 devices and 3 users.
@@ -54,7 +54,7 @@ Pulling the container:
 docker pull portainer/portainer-ce:latest
 #+end_src
 
-Starting Portainer using docker:
+Starting Portainer using Docker:
 #+begin_src bash
 sudo docker run -d -p 9000:9000 --name=portainer_app --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 #+end_src
@@ -71,7 +71,7 @@ Pulling the container:
 docker pull nextcloud
 #+end_src
 
-Creating a docker network:
+Creating a Docker network:
 #+begin_src bash
 docker network create --driver bridge nextcloud-net
 #+end_src
