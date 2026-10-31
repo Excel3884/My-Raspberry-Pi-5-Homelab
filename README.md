@@ -1,30 +1,30 @@
 
 # Table of Contents
 
-1.  [Introduction](#org5963a3c)
-2.  [Setup](#orgef897ec)
-3.  [Prerequisites](#org4efe060)
-    1.  [Docker](#org8a933ba)
-    2.  [Tailscale](#org22ae949)
-4.  [Services](#orga1c7b43)
-    1.  [Portainer](#org0abee6d)
-    2.  [Nextcloud](#orgec4eacb)
-    3.  [Nextcloud Whiteboard](#orge5ae22c)
-    4.  [Bitwarden](#orgfa671cb)
-    5.  [FreshRSS](#org8f5b722)
-    6.  [Super Productivity](#orgb378f08)
-5.  [Backups](#org2268322)
+1.  [Introduction](#orgf39b124)
+2.  [Setup](#org0fb62e3)
+3.  [Prerequisites](#org34ed4b7)
+    1.  [Docker](#org398823c)
+    2.  [Tailscale](#org20961e5)
+4.  [Services](#org5376e30)
+    1.  [Portainer](#org169cec5)
+    2.  [Nextcloud](#orgb473550)
+    3.  [Nextcloud Whiteboard](#org23f3112)
+    4.  [Bitwarden](#org92dbde8)
+    5.  [FreshRSS](#org2bf5445)
+    6.  [Super Productivity](#orgaad1bcb)
+5.  [Backups](#org93dc4e7)
 
 
 
-<a id="org5963a3c"></a>
+<a id="orgf39b124"></a>
 
 # Introduction
 
-In this repository I have listed all of the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
+In this repository I have listed all the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="orgef897ec"></a>
+<a id="org0fb62e3"></a>
 
 # Setup
 
@@ -34,12 +34,12 @@ In this repository I have listed all of the steps I have taken to configure my R
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="org4efe060"></a>
+<a id="org34ed4b7"></a>
 
 # Prerequisites
 
 
-<a id="org8a933ba"></a>
+<a id="org398823c"></a>
 
 ## Docker
 
@@ -49,7 +49,7 @@ Installing Docker:
 
     curl -fsSL https://get.docker.com | sh
 
-Testing docker for correct operation:
+Testing Docker for correct operation:
 
     sudo docker run --rm hello-world
 
@@ -57,10 +57,10 @@ Adding the user to the docker group:
 
     sudo usermod -aG docker <my-username> # where my-username is the username of your account
 
-Then exit and log back in to be added to the docker group.
+Then exit and log back in to be added to the Docker group.
 
 
-<a id="org22ae949"></a>
+<a id="org20961e5"></a>
 
 ## Tailscale
 
@@ -75,12 +75,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="orga1c7b43"></a>
+<a id="org5376e30"></a>
 
 # Services
 
 
-<a id="org0abee6d"></a>
+<a id="org169cec5"></a>
 
 ## Portainer
 
@@ -92,14 +92,14 @@ Pulling the container:
 
     docker pull portainer/portainer-ce:latest
 
-Starting Portainer using docker:
+Starting Portainer using Docker:
 
     sudo docker run -d -p 9000:9000 --name=portainer_app --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="orgec4eacb"></a>
+<a id="orgb473550"></a>
 
 ## Nextcloud
 
@@ -111,7 +111,7 @@ Pulling the container:
 
     docker pull nextcloud
 
-Creating a docker network:
+Creating a Docker network:
 
     docker network create --driver bridge nextcloud-net
 
@@ -134,7 +134,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="orge5ae22c"></a>
+<a id="org23f3112"></a>
 
 ## Nextcloud Whiteboard
 
@@ -157,7 +157,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="orgfa671cb"></a>
+<a id="org92dbde8"></a>
 
 ## Bitwarden
 
@@ -183,15 +183,15 @@ Transfer the generated files to the `/ssl/keys` folder.
 
 The Vaultwarden container can finally be deployed to support HTTPS, by passing the `.key` and `.cert` files to &ldquo;Rocket&rdquo;:
 
-    docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
+    docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.key"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 
 
-<a id="org8f5b722"></a>
+<a id="org2bf5445"></a>
 
 ## FreshRSS
 
 
-<a id="orgb378f08"></a>
+<a id="orgaad1bcb"></a>
 
 ## Super Productivity
 
@@ -208,7 +208,7 @@ Furthermore, configuring SuperProducivity Sync requires a separate app password 
 Finally, make sure there is a folder in the root of your Nextcloud files having the same name as the Sync Folder Path you specified in the configuration. Super Producivity won&rsquo;t create the folder for you automatically.
 
 
-<a id="org2268322"></a>
+<a id="org93dc4e7"></a>
 
 # Backups
 

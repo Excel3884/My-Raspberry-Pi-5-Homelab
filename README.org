@@ -141,7 +141,7 @@ Transfer the generated files to the ~/ssl/keys~ folder.
 
 The Vaultwarden container can finally be deployed to support HTTPS, by passing the ~.key~ and ~.cert~ files to "Rocket":
 #+begin_src bash
-docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.cert"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
+docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.key"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 #+end_src
 
 ** FreshRSS
