@@ -148,7 +148,7 @@ However, I discovered later that there is an easier way to do this. It can also 
 #+begin_src bash
 sudo tailscale serve --bg --https://127.0.0.1:<port> # where port is the assigned, http port via the docker command or portainer
 #+end_src
-More information about the =seve= command may be found [[https://tailscale.com/docs/reference/tailscale-cli/serve][here]].
+More information about the =serve= command may be found [[https://tailscale.com/docs/reference/tailscale-cli/serve][here]].
 
 ** FreshRSS
 ** Super Productivity
