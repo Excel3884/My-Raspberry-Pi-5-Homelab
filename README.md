@@ -1,30 +1,30 @@
 
 # Table of Contents
 
-1.  [Introduction](#orgf39b124)
-2.  [Setup](#org0fb62e3)
-3.  [Prerequisites](#org34ed4b7)
-    1.  [Docker](#org398823c)
-    2.  [Tailscale](#org20961e5)
-4.  [Services](#org5376e30)
-    1.  [Portainer](#org169cec5)
-    2.  [Nextcloud](#orgb473550)
-    3.  [Nextcloud Whiteboard](#org23f3112)
-    4.  [Bitwarden](#org92dbde8)
-    5.  [FreshRSS](#org2bf5445)
-    6.  [Super Productivity](#orgaad1bcb)
-5.  [Backups](#org93dc4e7)
+1.  [Introduction](#org0b49718)
+2.  [Setup](#org09a046c)
+3.  [Prerequisites](#org9ac4374)
+    1.  [Docker](#orgce66eed)
+    2.  [Tailscale](#orga2e718e)
+4.  [Services](#org484d026)
+    1.  [Portainer](#orgbcf0421)
+    2.  [Nextcloud](#org34226e3)
+    3.  [Nextcloud Whiteboard](#orgecd8a0c)
+    4.  [Bitwarden](#org60db9a6)
+    5.  [FreshRSS](#orgcb46190)
+    6.  [Super Productivity](#orga791518)
+5.  [Backups](#org111d596)
 
 
 
-<a id="orgf39b124"></a>
+<a id="org0b49718"></a>
 
 # Introduction
 
 In this repository I have listed all the steps I have taken to configure my Raspberry Pi 5 for a homelab. This serves as documentation that I can get back to if I want to look something up, and hopefully it will be helpful to others too.
 
 
-<a id="org0fb62e3"></a>
+<a id="org09a046c"></a>
 
 # Setup
 
@@ -34,12 +34,12 @@ In this repository I have listed all the steps I have taken to configure my Rasp
 -   **Storage:** (Official) Raspberry Pi Flash Drive 256GB
 
 
-<a id="org34ed4b7"></a>
+<a id="org9ac4374"></a>
 
 # Prerequisites
 
 
-<a id="org398823c"></a>
+<a id="orgce66eed"></a>
 
 ## Docker
 
@@ -60,7 +60,7 @@ Adding the user to the docker group:
 Then exit and log back in to be added to the Docker group.
 
 
-<a id="org20961e5"></a>
+<a id="orga2e718e"></a>
 
 ## Tailscale
 
@@ -75,12 +75,12 @@ Starting Tailscale:
     sudo tailscale up
 
 
-<a id="org5376e30"></a>
+<a id="org484d026"></a>
 
 # Services
 
 
-<a id="org169cec5"></a>
+<a id="orgbcf0421"></a>
 
 ## Portainer
 
@@ -99,7 +99,7 @@ Starting Portainer using Docker:
 Then Portainer can be accessed at `http://<my-hostname>:9000`, where my-hostname is the hostname of your Raspberry Pi.
 
 
-<a id="orgb473550"></a>
+<a id="org34226e3"></a>
 
 ## Nextcloud
 
@@ -134,7 +134,7 @@ Choose PostgreSQL for database and use `postgres` for username, database name, a
 Use the password that you configured for the database when you ran the container.
 
 
-<a id="org23f3112"></a>
+<a id="orgecd8a0c"></a>
 
 ## Nextcloud Whiteboard
 
@@ -157,7 +157,7 @@ You will notice there is a red WiFi icon on the bottom right indicating you are 
 After saving the settings, you should see a confirmation message, and you are good to go!
 
 
-<a id="org92dbde8"></a>
+<a id="org60db9a6"></a>
 
 ## Bitwarden
 
@@ -185,13 +185,19 @@ The Vaultwarden container can finally be deployed to support HTTPS, by passing t
 
     docker run -d -e ROCKET_TLS='{certs="/ssl/<machine-name>.<tailnet-name>.ts.net.cert",key="/ssl/<machine-name>.<tailnet-name>.ts.net.key"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
 
+However, I discovered later that there is an easier way to do this. It can also be applied to any other docker container.
 
-<a id="org2bf5445"></a>
+    sudo tailscale serve --bg --https://127.0.0.1:<port> # where port is the assigned, http port via the docker command or portainer
+
+More information about the `seve` command may be found [here](https://tailscale.com/docs/reference/tailscale-cli/serve).
+
+
+<a id="orgcb46190"></a>
 
 ## FreshRSS
 
 
-<a id="orgaad1bcb"></a>
+<a id="orga791518"></a>
 
 ## Super Productivity
 
@@ -208,7 +214,7 @@ Furthermore, configuring SuperProducivity Sync requires a separate app password 
 Finally, make sure there is a folder in the root of your Nextcloud files having the same name as the Sync Folder Path you specified in the configuration. Super Producivity won&rsquo;t create the folder for you automatically.
 
 
-<a id="org93dc4e7"></a>
+<a id="org111d596"></a>
 
 # Backups
 
